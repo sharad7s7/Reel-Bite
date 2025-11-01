@@ -3,7 +3,7 @@ const bcrypt=require('bcryptjs');
 const jwt=require('jsonwebtoken');
 
 async function registerUser(req,res){
-    
+
     const {fullName,email,password}=req.body;
     const isUserExist= await userModel.findOne({email});
 
@@ -39,4 +39,42 @@ async function registerUser(req,res){
     })
 }
 
-module.exports={registerUser};
+async function loginUser(req,res){
+    const {email,password}=req.body;
+
+    const user=await userModel.findOne({email});
+
+    if(!user){
+        return res.status(400).json({
+            message:"Invalid email or password"
+        })
+    }
+
+    const isPasswordValid=await bcrypt.compare(password,user.password);
+
+    if(!isPasswordValid){
+        return res.status(400).json({
+            message:"Invalid email or password"
+        })
+    }
+
+    const token=jwt.sign({
+        id:user._id
+    },
+    "55409f3dbd32eee634a7643ab6f0fda8")
+
+    res.cookie("token",token)
+
+    return res.status(200).json({
+        message:"User logged in successfully",
+        user:{
+            _id:user._id,
+            email:user.email,
+            fullName:user.fullName
+        }
+    })
+
+}
+
+
+module.exports={registerUser,loginUser};
