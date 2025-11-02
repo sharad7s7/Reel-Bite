@@ -30,4 +30,4 @@ async function authFoodPartnerMiddleware(req, res, next) {
     }
 }
 
-module.exports = authFoodPartnerMiddleware;
+module.exports = {authFoodPartnerMiddleware};
