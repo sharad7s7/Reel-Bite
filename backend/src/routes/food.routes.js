@@ -9,7 +9,10 @@ const upload=multer({
     storage: multer.memoryStorage()
 })
 
+//[protected]
+router.post( '/', authMiddleware.authFoodPartnerMiddleware, upload.single("video") , foodController.addFood);
+//[protected]
+router.get("/",authMiddleware.authUserMiddleware,foodController.getFoodItems)
 
-router.post( '/add', authMiddleware.authFoodPartnerMiddleware, upload.single("video") , foodController.addFood);
 
 module.exports=router;
