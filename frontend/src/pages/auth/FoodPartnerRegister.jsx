@@ -1,14 +1,21 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import '../../styles/auth-shared.css';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Sun, Moon } from "lucide-react";
+import "../../styles/auth-shared.css";
 
 const FoodPartnerRegister = () => {
-
   const navigate = useNavigate();
-  
-  const handleSubmit = (e) => { 
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const businessName = e.target.businessName.value;
@@ -18,63 +25,101 @@ const FoodPartnerRegister = () => {
     const password = e.target.password.value;
     const address = e.target.address.value;
 
-    axios.post("http://localhost:3000/api/auth/food-partner/register", {
-      name:businessName,
-      contactName,
-      phone,
-      email,
-      password,
-      address
-    }, { withCredentials: true })
-      .then(response => {
-        console.log(response.data);
-        navigate("/create-food"); // Redirect to create food page after successful registration
-      })
-      .catch(error => {
-        console.error("There was an error registering!", error);
-      });
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/food-partner/register",
+        {
+          name: businessName,
+          contactName,
+          phone,
+          email,
+          password,
+          address,
+        },
+        { withCredentials: true }
+      );
+      console.log(response.data);
+      navigate("/create-food");
+    } catch (error) {
+      alert("Registration failed. Please check your details.");
+    }
   };
+
+  const foodIcons = ["🍕", "🍔", "🥗", "🍩", "🍎", "🍪", "🥑", "🍰", "🍣", "🍞"];
 
   return (
     <div className="auth-page-wrapper">
+      {/* Floating emojis */}
+      <ul className="floating-foods">
+        {foodIcons.map((icon, i) => (
+          <li key={i} style={{ animationDelay: `${i * 2}s` }}>
+            {icon}
+          </li>
+        ))}
+      </ul>
+
+      {/* Theme toggle */}
+      <button className="theme-toggle" onClick={toggleTheme}>
+        {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+      </button>
+
+      {/* Register Card */}
       <div className="auth-card" role="region" aria-labelledby="partner-register-title">
         <header>
-          <h1 id="partner-register-title" className="auth-title">Partner sign up</h1>
-          <p className="auth-subtitle">Grow your business with our platform.</p>
+          <h1 id="partner-register-title" className="auth-title">
+            Partner Sign Up
+          </h1>
+          <p className="auth-subtitle">
+            Grow your business with our delivery network.
+          </p>
         </header>
-        <nav className="auth-alt-action" style={{marginTop: '-4px'}}>
-          <strong style={{fontWeight:600}}>Switch:</strong> <Link to="/user/register">User</Link> • <Link to="/food-partner/register">Food partner</Link>
+
+        <nav className="auth-alt-action" style={{ marginTop: "-4px" }}>
+          <strong style={{ fontWeight: 600 }}>Switch:</strong>{" "}
+          <Link to="/user/register">User</Link> •{" "}
+          <Link to="/food-partner/register">Food Partner</Link>
         </nav>
+
         <form className="auth-form" onSubmit={handleSubmit} noValidate>
           <div className="field-group">
             <label htmlFor="businessName">Business Name</label>
-            <input id="businessName" name="businessName" placeholder="Tasty Bites" autoComplete="organization" />
+            <input id="businessName" name="businessName" placeholder="Tasty Bites" required />
           </div>
-          <div className="two-col">
-            <div className="field-group">
+
+          <div className="two-col" style={{ display: "flex", gap: "12px" }}>
+            <div className="field-group" style={{ flex: 1 }}>
               <label htmlFor="contactName">Contact Name</label>
-              <input id="contactName" name="contactName" placeholder="Jane Doe" autoComplete="name" />
+              <input id="contactName" name="contactName" placeholder="Jane Doe" required />
             </div>
-            <div className="field-group">
+            <div className="field-group" style={{ flex: 1 }}>
               <label htmlFor="phone">Phone</label>
-              <input id="phone" name="phone" placeholder="+1 555 123 4567" autoComplete="tel" />
+              <input id="phone" name="phone" placeholder="+1 555 123 4567" required />
             </div>
           </div>
-            <div className="field-group">
-              <label htmlFor="email">Email</label>
-              <input id="email" name="email" type="email" placeholder="business@example.com" autoComplete="email" />
-            </div>
+
+          <div className="field-group">
+            <label htmlFor="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="business@example.com" required />
+          </div>
+
           <div className="field-group">
             <label htmlFor="password">Password</label>
-            <input id="password" name="password" type="password" placeholder="Create password" autoComplete="new-password" />
+            <input id="password" name="password" type="password" placeholder="Create password" required />
           </div>
+
           <div className="field-group">
             <label htmlFor="address">Address</label>
-            <input id="address" name="address" placeholder="123 Market Street" autoComplete="street-address" />
-            <p className="small-note">Full address helps customers find you faster.</p>
+            <input id="address" name="address" placeholder="123 Market Street" required />
+            <p className="small-note">
+              Full address helps customers find you faster.
+            </p>
           </div>
-          <button className="auth-submit" type="submit">Create Partner Account</button>
+
+          <button className="auth-submit" type="submit">
+            Create Partner Account
+          </button>
         </form>
+
         <div className="auth-alt-action">
           Already a partner? <Link to="/food-partner/login">Sign in</Link>
         </div>

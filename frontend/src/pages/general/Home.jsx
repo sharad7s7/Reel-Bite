@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import '../../styles/reels.css'
 import ReelFeed from '../../components/ReelFeed'
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+    const navigate = useNavigate();
     const [ videos, setVideos ] = useState([])
     // Autoplay behavior is handled inside ReelFeed
 
@@ -15,7 +17,9 @@ const Home = () => {
 
                 setVideos(response.data.foodItems)
             })
-            .catch(() => { /* noop: optionally handle error */ })
+            .catch(() => { 
+                navigate("/register")
+             })
     }, [])
 
     // Using local refs within ReelFeed; keeping map here for dependency parity if needed

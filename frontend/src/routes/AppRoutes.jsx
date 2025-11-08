@@ -1,4 +1,3 @@
-import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import UserRegister from '../pages/auth/UserRegister';
 import ChooseRegister from '../pages/auth/ChooseRegister';
@@ -21,25 +20,11 @@ const AppRoutes = () => {
                 <Route path="/user/login" element={<UserLogin />} />
                 <Route path="/food-partner/register" element={<FoodPartnerRegister />} />
                 <Route path="/food-partner/login" element={<FoodPartnerLogin />} />
-                {/* <Route path="/" element={<><Home /><BottomNav /></>} /> */}
                 <Route path="/saved" element={<><Saved /><BottomNav /></>} />
                 <Route path="/create-food" element={<CreateFood />} />
                 <Route path="/food-partner/:id" element={<Profile />} />
-                <Route
-                    path="/"
-                    element={
-                        document.cookie.includes("token=")
-                            ? (
-                                <>
-                                    <Home />
-                                    <BottomNav />
-                                </>
-                            )
-                            : (
-                                <Navigate to="/register" replace />
-                            )
-                    }
-                />
+                <Route path="/register" element={<ChooseRegister />} />
+                <Route path="/" element={<><Home /><BottomNav /></>}/>
             </Routes>
         </Router>
     )
