@@ -3,7 +3,6 @@ import axios from 'axios';
 import '../../styles/reels.css'
 import ReelFeed from '../../components/ReelFeed'
 import { useNavigate } from 'react-router-dom';
-
 const Home = () => {
     const navigate = useNavigate();
     const [ videos, setVideos ] = useState([])
@@ -18,7 +17,7 @@ const Home = () => {
                 setVideos(response.data.foodItems)
             })
             .catch(() => { 
-                navigate("/register")
+                navigate('/register');
              })
     }, [])
 

@@ -14,7 +14,7 @@ async function createFood(req, res) {
         video: fileUploadResult.url,
         foodPartner: req.foodPartner._id
     })
-
+    
     res.status(201).json({
         message: "food created successfully",
         food: foodItem
