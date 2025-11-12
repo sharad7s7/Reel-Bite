@@ -14,19 +14,6 @@
   --link-color: #2563eb;
 }
 
-[data-theme="dark"] {
-  --bg1: #0d162b;
-  --bg2: #1a2b4a;
-  --text-primary: #fff;
-  --text-secondary: #a0b3d1;
-  --btn-primary-bg: linear-gradient(90deg, #4f9eff, #3b82f6);
-  --btn-primary-text: #fff;
-  --btn-secondary-bg: rgba(255, 255, 255, 0.15);
-  --btn-secondary-text: #fff;
-  --border-color: rgba(255, 255, 255, 0.15);
-  --link-color: #60a5fa;
-}
-
 /* =====================================================
    PAGE BACKGROUND + FLOATING ELEMENTS
 ===================================================== */
@@ -110,31 +97,6 @@
 }
 
 /* =====================================================
-   THEME TOGGLE
-===================================================== */
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 24px;
-  background: transparent;
-  border: 1px solid var(--border-color);
-  border-radius: 50%;
-  color: var(--text-primary);
-  width: 42px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 10;
-  transition: all 0.3s ease;
-}
-.theme-toggle:hover {
-  background: var(--btn-secondary-bg);
-  transform: rotate(20deg);
-}
-
-/* =====================================================
    REGISTER CARD (Glassmorphism)
 ===================================================== */
 .register-card {
@@ -194,14 +156,18 @@
   filter: brightness(1.1);
   transform: scale(1.02);
 }
+
 .register-btn.secondary {
-  background: var(--btn-secondary-bg);
-  color: var(--btn-secondary-text);
-  border: 1px solid var(--border-color);
+  background: #ffffff; /* solid white background */
+  color: #0f172a; /* dark text */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.25s ease;
 }
+
 .register-btn.secondary:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: #f8fafc; /* slight off-white hover */
   transform: scale(1.02);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
 }
 
 /* Footer */

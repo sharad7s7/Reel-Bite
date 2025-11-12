@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 // Reusable feed for vertical reels
@@ -9,7 +9,10 @@ import { Link } from 'react-router-dom'
 // - emptyMessage: string
 const ReelFeed = ({ items = [], onLike, onSave, emptyMessage = 'No videos yet.' }) => {
   const videoRefs = useRef(new Map())
+  const [likedItems, setLikedItems] = useState(new Set())   // Track liked videos
+  const [savedItems, setSavedItems] = useState(new Set())   // Track saved videos
 
+  // Autoplay / pause when visible
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -31,8 +34,33 @@ const ReelFeed = ({ items = [], onLike, onSave, emptyMessage = 'No videos yet.' 
   }, [items])
 
   const setVideoRef = (id) => (el) => {
-    if (!el) { videoRefs.current.delete(id); return }
+    if (!el) {
+      videoRefs.current.delete(id)
+      return
+    }
     videoRefs.current.set(id, el)
+  }
+
+  // ❤️ Toggle like
+  const handleLike = (item) => {
+    setLikedItems((prev) => {
+      const newSet = new Set(prev)
+      if (newSet.has(item._id)) newSet.delete(item._id)
+      else newSet.add(item._id)
+      return newSet
+    })
+    if (onLike) onLike(item)
+  }
+
+  // 💾 Toggle save
+  const handleSave = (item) => {
+    setSavedItems((prev) => {
+      const newSet = new Set(prev)
+      if (newSet.has(item._id)) newSet.delete(item._id)
+      else newSet.add(item._id)
+      return newSet
+    })
+    if (onSave) onSave(item)
   }
 
   return (
@@ -58,47 +86,90 @@ const ReelFeed = ({ items = [], onLike, onSave, emptyMessage = 'No videos yet.' 
 
             <div className="reel-overlay">
               <div className="reel-overlay-gradient" aria-hidden="true" />
+
+              {/* Action Buttons */}
               <div className="reel-actions">
+                {/* ❤️ Like */}
                 <div className="reel-action-group">
                   <button
-                    onClick={onLike ? () => onLike(item) : undefined}
-                    className="reel-action"
+                    onClick={() => handleLike(item)}
+                    className={`reel-action ${likedItems.has(item._id) ? 'liked' : ''}`}
                     aria-label="Like"
                   >
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 22l7.8-8.6 1-1a5.5 5.5 0 0 0 0-7.8z" />
                     </svg>
                   </button>
-                  <div className="reel-action__count">{item.likeCount ?? item.likesCount ?? item.likes ?? 0}</div>
+                  <div className="reel-action__count">
+                    {item.likeCount ?? item.likesCount ?? item.likes ?? 0}
+                  </div>
                 </div>
 
+                {/* 💾 Save */}
                 <div className="reel-action-group">
                   <button
-                    className="reel-action"
-                    onClick={onSave ? () => onSave(item) : undefined}
+                    onClick={() => handleSave(item)}
+                    className={`reel-action ${savedItems.has(item._id) ? 'saved' : ''}`}
                     aria-label="Bookmark"
                   >
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z" />
                     </svg>
                   </button>
-                  <div className="reel-action__count">{item.savesCount ?? item.bookmarks ?? item.saves ?? 0}</div>
+                  <div className="reel-action__count">
+                    {item.savesCount ?? item.bookmarks ?? item.saves ?? 0}
+                  </div>
                 </div>
 
+                {/* 💬 Comments */}
                 <div className="reel-action-group">
                   <button className="reel-action" aria-label="Comments">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
                     </svg>
                   </button>
-                  <div className="reel-action__count">{item.commentsCount ?? (Array.isArray(item.comments) ? item.comments.length : 0)}</div>
+                  <div className="reel-action__count">
+                    {item.commentsCount ?? (Array.isArray(item.comments) ? item.comments.length : 0)}
+                  </div>
                 </div>
               </div>
 
+              {/* Description + Visit Store */}
               <div className="reel-content">
-                <p className="reel-description" title={item.description}>{item.description}</p>
+                <p className="reel-description" title={item.description}>
+                  {item.description}
+                </p>
                 {item.foodPartner && (
-                  <Link className="reel-btn" to={"/food-partner/" + item.foodPartner} aria-label="Visit store">Visit store</Link>
+                  <Link className="reel-btn" to={`/food-partner/${item.foodPartner}`} aria-label="Visit store">
+                    Visit store
+                  </Link>
                 )}
               </div>
             </div>

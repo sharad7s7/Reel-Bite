@@ -31,7 +31,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #081734
+  background: linear-gradient(90deg, #1a1f2e, #0d111a); 
 }
 
 /* --- Video --- */
@@ -47,11 +47,11 @@
 /* --- Right side actions --- */
 .reel-actions {
   position: absolute;
-  right: calc(50% - min(42%, 200px) - 70px); /* near the video */
+  right: calc(50% - min(42%, 200px) - 80px); /* near the video */
   bottom: 90px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 20px;
   pointer-events: auto;
   z-index: 10;
 }
@@ -80,6 +80,33 @@
   background: rgba(255, 255, 255, 0.15);
   transform: translateY(-2px);
 }
+
+/* ❤️ When liked (only icon turns red) */
+.reel-action.liked {
+  background: rgba(0, 0, 0, 0.4); /* same as default */
+  color: #ff4444; /* red heart */
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: none;
+}
+
+.reel-action.liked svg path {
+  stroke: #ff4444;
+  fill: #ff4444; /* makes inner heart red */
+}
+
+/* 💾 When saved (only icon turns white) */
+.reel-action.saved {
+  background: rgba(0, 0, 0, 0.4); /* same as default */
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: none;
+}
+
+.reel-action.saved svg path {
+  stroke: #ffffff;
+  fill: #ffffff; /* fills bookmark icon white */
+}
+
 .reel-action__count {
   color: #fff;
   font-size: 13px;
@@ -102,22 +129,22 @@
 
 /* Glassy banner for description */
 .reel-description {
-  background: rgba(0, 0, 0, 0.55);
+  background: #151b2c;
   backdrop-filter: blur(10px);
   border-radius: 10px;
   padding: 10px 14px;
   color: #fff;
   font-size: 0.95rem;
   line-height: 1.4;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  /* text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); */
   max-width: 80%;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  /* box-shadow: 0 4px 10px rgba(0,0,0,0.3); */
 }
 
 /* Visit Store button below banner */
 .reel-btn {
   background: var(--color-accent);
-  color: #fff;
+  color: #fff; /* keep text always white */
   border-radius: 999px;
   padding: 9px 18px;
   font-weight: 600;
@@ -126,8 +153,19 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   transition: all 0.25s ease;
 }
-.reel-btn:hover { background: var(--color-accent-hover); transform: translateY(-2px); }
-.reel-btn:active { transform: translateY(1px); }
+
+.reel-btn:hover {
+  background: var(--color-accent-hover);
+  color: #fff; /* ensure hover doesn’t change text color */
+  transform: translateY(-2px);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3); /* subtle text glow to enhance visibility */
+}
+
+.reel-btn:active {
+  transform: translateY(1px);
+  color: #fff; /* keep it consistent even on click */
+}
+
 
 /* --- Empty state --- */
 .empty-state {

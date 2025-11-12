@@ -1,7 +1,4 @@
-/* ==============================================
-   Shared Auth Styles (Register + Login)
-   Follows ChooseRegister aesthetic
-================================================= */
+
 @import "./choose-register.css";
 
 .auth-page-wrapper {
@@ -13,13 +10,14 @@
   overflow: hidden;
   font-family: 'Inter', system-ui, sans-serif;
   color: var(--text-primary);
-  background: radial-gradient(circle at 20% 20%, var(--bg2), var(--bg1) 70%);
+  background: linear-gradient(90deg, #1a1f2e, #0d111a); 
+
 }
 
 .auth-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(18px);
-  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.08); /* Slightly stronger */
+  backdrop-filter: blur(22px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 20px;
   padding: 3rem 2.5rem;
   width: 90%;
@@ -27,17 +25,25 @@
   text-align: center;
   position: relative;
   z-index: 2;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.4); /* darker glow */
+  transition: transform 0.4s ease, background 0.3s ease;
 }
+
+.auth-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.12); /* Slight lift when hovering */
+}
+
 
 .auth-title {
   font-size: 2rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
+  color: white;
 }
 
 .auth-subtitle {
-  color: var(--text-secondary);
+  color: white;
   font-size: 1rem;
   margin-bottom: 2rem;
 }
@@ -90,12 +96,13 @@
 
 .auth-alt-action, .register-footer {
   margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   font-size: 0.95rem;
-  color: var(--text-secondary);
+  color: white;
 }
 
 .auth-alt-action a, .login-link {
-  color: var(--link-color);
+  color: red;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s ease;

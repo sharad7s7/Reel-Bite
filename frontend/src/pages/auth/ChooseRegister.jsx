@@ -1,17 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { UserPlus, UtensilsCrossed, LogIn, Sun, Moon } from "lucide-react";
+import { UserPlus, UtensilsCrossed, LogIn} from "lucide-react";
 import "../../styles/auth-shared.css"; // ✅ use shared theme, not choose-register.css
 
 const ChooseRegister = () => {
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
 
   const foodIcons = ["🍕", "🍔", "🥗", "🍩", "🍎", "🍪", "🥑", "🍰", "🍣", "🍞"];
 
@@ -25,15 +17,6 @@ const ChooseRegister = () => {
           </li>
         ))}
       </ul>
-
-      {/* Theme Toggle */}
-      <button
-        className="theme-toggle"
-        onClick={toggleTheme}
-        aria-label="Toggle theme"
-      >
-        {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-      </button>
 
       {/* Main Card */}
       <div className="auth-card" role="region" aria-labelledby="choose-register-title">

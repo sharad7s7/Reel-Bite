@@ -6,14 +6,6 @@ import "../../styles/auth-shared.css"; // ✅ unified styling
 
 const UserRegister = () => {
   const navigate = useNavigate();
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,15 +47,6 @@ const UserRegister = () => {
         ))}
       </ul>
 
-      {/* Theme toggle */}
-      <button
-        className="theme-toggle"
-        onClick={toggleTheme}
-        aria-label="Toggle theme"
-      >
-        {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-      </button>
-
       {/* Register Card */}
       <div className="auth-card" role="region" aria-labelledby="user-register-title">
         <header>
@@ -74,6 +57,11 @@ const UserRegister = () => {
             Join now to explore and enjoy delicious meals.
           </p>
         </header>
+
+        <nav className="auth-alt-action" style={{ marginTop: "-4px" }}>
+                          <strong style={{ fontWeight: 600 }}>Switch To:</strong>{" "}
+                          <Link to="/food-partner/register"> Food Partner</Link>
+                        </nav>
 
         <form className="auth-form" onSubmit={handleSubmit} noValidate>
           <div className="two-col" style={{ display: "flex", gap: "12px" }}>

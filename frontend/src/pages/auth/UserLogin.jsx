@@ -6,14 +6,6 @@ import { Sun, Moon } from "lucide-react";
 
 const UserLogin = () => {
   const navigate = useNavigate();
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,15 +36,15 @@ const UserLogin = () => {
         ))}
       </ul>
 
-      <button className="theme-toggle" onClick={toggleTheme}>
-        {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-      </button>
-
       <div className="auth-card">
         <header>
           <h1 className="auth-title">Welcome Back</h1>
           <p className="auth-subtitle">Sign in to continue your food journey.</p>
         </header>
+         <nav className="auth-alt-action" style={{ marginTop: "-4px" }}>
+                  <strong style={{ fontWeight: 600 }}>Switch To:</strong>{" "}
+                  <Link to="/food-partner/login"> Food Partner</Link>
+                </nav>
         <form className="auth-form" onSubmit={handleSubmit} noValidate>
           <div className="field-group">
             <label htmlFor="email">Email</label>

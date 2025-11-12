@@ -6,14 +6,6 @@ import "../../styles/auth-shared.css";
 
 const FoodPartnerRegister = () => {
   const navigate = useNavigate();
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,11 +50,6 @@ const FoodPartnerRegister = () => {
         ))}
       </ul>
 
-      {/* Theme toggle */}
-      <button className="theme-toggle" onClick={toggleTheme}>
-        {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-      </button>
-
       {/* Register Card */}
       <div className="auth-card" role="region" aria-labelledby="partner-register-title">
         <header>
@@ -75,9 +62,8 @@ const FoodPartnerRegister = () => {
         </header>
 
         <nav className="auth-alt-action" style={{ marginTop: "-4px" }}>
-          <strong style={{ fontWeight: 600 }}>Switch:</strong>{" "}
-          <Link to="/user/register">User</Link> •{" "}
-          <Link to="/food-partner/register">Food Partner</Link>
+          <strong style={{ fontWeight: 600 }}>Switch To:</strong>{" "}
+          <Link to="/user/register"> User</Link>
         </nav>
 
         <form className="auth-form" onSubmit={handleSubmit} noValidate>

@@ -7,7 +7,7 @@
   right: 0;
   bottom: 0;
   height: 60px;
-  background: rgba(17, 24, 39, 0.55); /* semi-transparent slate */
+  background: rgba(36, 41, 50, 0.55); /* semi-transparent slate */
   backdrop-filter: blur(12px) saturate(180%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -37,7 +37,7 @@
   border: none;
   outline: none;
   font-size: 12px;
-  color: var(--color-text-secondary);
+  color: white;
   transition: all 0.25s ease;
   cursor: pointer;
 }
@@ -52,7 +52,7 @@
 
 /* --- Colors for Each Button --- */
 .bottom-nav__item.home-active.is-active {
-  color: var(--color-accent);
+  color: white;
   filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.6)); /* blue glow */
 }
 
@@ -62,7 +62,7 @@
 }
 
 .logout-btn {
-  color: var(--color-danger);
+  color: rgb(238, 7, 7);
 }
 
 .logout-btn:hover {
