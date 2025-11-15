@@ -33,17 +33,6 @@ const Profile = () => {
                         </p>
                     </div>
                 </div>
-
-                <div className="profile-stats" role="list" aria-label="Stats">
-                    <div className="profile-stat" role="listitem">
-                        <span className="profile-stat-label">total meals</span>
-                        <span className="profile-stat-value">{profile?.totalMeals}</span>
-                    </div>
-                    <div className="profile-stat" role="listitem">
-                        <span className="profile-stat-label">customer served</span>
-                        <span className="profile-stat-value">{profile?.customersServed}</span>
-                    </div>
-                </div>
             </section>
 
             <hr className="profile-sep" />

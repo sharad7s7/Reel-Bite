@@ -9,6 +9,8 @@ const CreateFood = () => {
     const [ videoFile, setVideoFile ] = useState(null);
     const [ videoURL, setVideoURL ] = useState('');
     const [ fileError, setFileError ] = useState('');
+    const [loading, setLoading] = useState(false);
+
     const fileInputRef = useRef(null);
 
     const navigate = useNavigate();
@@ -47,24 +49,41 @@ const CreateFood = () => {
 
     const openFileDialog = () => fileInputRef.current?.click();
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-        const formData = new FormData();
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('description', description);
+    formData.append("mama", videoFile);
 
-        formData.append('name', name);
-        formData.append('description', description);
-        formData.append("mama", videoFile);
-
-        const response = await axios.post("http://localhost:3000/api/food", formData, {
-            withCredentials: true,
-        })
+    try {
+        const response = await axios.post(
+            "http://localhost:3000/api/food",
+            formData,
+            { withCredentials: true }
+        );
 
         console.log(response.data);
-        navigate("/create-food"); // Redirect to home or another page after successful creation
-        // Optionally reset
-        // setName(''); setDescription(''); setVideoFile(null);
-    };
+
+        // Reset fields
+        setName('');
+        setDescription('');
+        setVideoFile(null);
+
+        // Wait a moment (nice UX), then refresh create-food
+        setTimeout(() => {
+            window.location.href = "/create-food";
+        }, 700);
+
+    } catch (err) {
+        console.error("Upload failed:", err);
+    }
+
+    setLoading(false);
+};
+
 
     const isDisabled = useMemo(() => !name.trim() || !videoFile, [ name, videoFile ]);
 
@@ -156,9 +175,14 @@ const CreateFood = () => {
                     </div>
 
                     <div className="form-actions">
-                        <button className="btn-primary" type="submit" disabled={isDisabled}>
-                            Save Food
-                        </button>
+                        <button
+    className="btn-primary"
+    type="submit"
+    disabled={isDisabled || loading}
+>
+    {loading ? <div className="spinner"></div> : "Save Food"}
+</button>
+
                     </div>
                 </form>
             </div>

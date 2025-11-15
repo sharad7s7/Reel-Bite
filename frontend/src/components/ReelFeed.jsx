@@ -162,16 +162,26 @@ const ReelFeed = ({ items = [], onLike, onSave, emptyMessage = 'No videos yet.' 
               </div>
 
               {/* Description + Visit Store */}
-              <div className="reel-content">
-                <p className="reel-description" title={item.description}>
-                  {item.description}
-                </p>
-                {item.foodPartner && (
-                  <Link className="reel-btn" to={`/food-partner/${item.foodPartner}`} aria-label="Visit store">
-                    Visit store
-                  </Link>
-                )}
-              </div>
+              {/* DESCRIPTION (keeps width inside video) */}
+<div className="reel-description-box" aria-hidden={false}>
+  <p className="reel-description" title={item.description}>
+    {item.description}
+  </p>
+</div>
+
+{/* VISIT BUTTON (unchanged location and styling) */}
+{item.foodPartner && (
+  <div className="reel-visit-box">
+    <Link
+      className="reel-btn"
+      to={`/food-partner/${item.foodPartner}`}
+      aria-label="Visit store"
+    >
+      Visit store
+    </Link>
+  </div>
+)}
+
             </div>
           </section>
         ))}

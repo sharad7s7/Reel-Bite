@@ -81,32 +81,6 @@
   transform: translateY(-2px);
 }
 
-/* ❤️ When liked (only icon turns red) */
-.reel-action.liked {
-  background: rgba(0, 0, 0, 0.4); /* same as default */
-  color: #ff4444; /* red heart */
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: none;
-}
-
-.reel-action.liked svg path {
-  stroke: #ff4444;
-  fill: #ff4444; /* makes inner heart red */
-}
-
-/* 💾 When saved (only icon turns white) */
-.reel-action.saved {
-  background: rgba(0, 0, 0, 0.4); /* same as default */
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: none;
-}
-
-.reel-action.saved svg path {
-  stroke: #ffffff;
-  fill: #ffffff; /* fills bookmark icon white */
-}
-
 .reel-action__count {
   color: #fff;
   font-size: 13px;
@@ -174,4 +148,32 @@
   display: grid;
   place-items: center;
   color: #fff;
+}
+/* Independent description box positioning */
+.reel-description-box {
+  position: absolute;
+  left: calc(25% - (min(85%, 420px) / 2)); /* aligns with video */
+  bottom: 180px; /* above Visit button */
+  width: min(85%, 420px);
+  z-index: 7;
+}
+
+/* Description styling */
+.reel-description-text {
+  background: rgba(21, 27, 44, 0.95);
+  backdrop-filter: blur(6px);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #fff;
+  width: 100%;
+}
+
+/* Visit store button stays fixed */
+.reel-visit-box {
+  position: absolute;
+  left: calc(30% - (min(85%, 420px) / 2));
+  bottom: 110px;
+  z-index: 7;
 }
