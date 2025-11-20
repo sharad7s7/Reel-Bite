@@ -60,7 +60,7 @@ const CreateFood = () => {
 
     try {
         const response = await axios.post(
-            "http://localhost:3000/api/food",
+            `${import.meta.env.VITE_API_URL}/api/food`,
             formData,
             { withCredentials: true }
         );

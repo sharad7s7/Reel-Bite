@@ -8,8 +8,8 @@ const BottomNav = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.get('http://localhost:3000/api/auth/user/logout', { withCredentials: true });
-      await axios.get('http://localhost:3000/api/auth/food-partner/logout', { withCredentials: true });
+      await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/user/logout`, { withCredentials: true });
+      await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/food-partner/logout`, { withCredentials: true });
       navigate('/register');
     } catch (error) {
       console.error('Logout failed:', error);

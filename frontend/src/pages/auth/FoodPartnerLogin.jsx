@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { Sun, Moon } from "lucide-react";
 
+
 const FoodPartnerLogin = () => {
   const navigate = useNavigate();
 
@@ -14,7 +15,7 @@ const FoodPartnerLogin = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/food-partner/login",
+        `${import.meta.env.VITE_API_URL}/api/auth/food-partner/login`,
         { email, password },
         { withCredentials: true }
       );
