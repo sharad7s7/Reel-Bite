@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:6
+    container_name: reelbite_mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  mongo-express:
+    image: mongo-express:1.0.2
+    container_name: reelbite_mongo_express
+    restart: always
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongo
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
+      ME_CONFIG_BASICAUTH: "false"
+
+  backend:
+    build: ./backend
+    container_name: reelbite_backend
+    restart: always
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+    env_file:
+      - ./backend/.env
+    environment:
+      MONGO_URL: mongodb://mongo:27017/reelbite
+
+  frontend:
+    build: ./frontend
+    container_name: reelbite_frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    env_file:
+      - ./frontend/.env
+
+volumes:
+  mongo_data:
