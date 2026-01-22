@@ -23,7 +23,7 @@ services:
       ME_CONFIG_BASICAUTH: "false"
 
   backend:
-    build: ./backend
+    image: sharad7s7/reelbite-backend:1.0
     container_name: reelbite_backend
     restart: always
     ports:
@@ -32,11 +32,9 @@ services:
       - mongo
     env_file:
       - ./backend/.env
-    environment:
-      MONGO_URL: mongodb://mongo:27017/reelbite
 
   frontend:
-    build: ./frontend
+    image: sharad7s7/reelbite-frontend:1.0
     container_name: reelbite_frontend
     restart: always
     ports:
